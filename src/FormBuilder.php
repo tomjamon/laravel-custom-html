@@ -1125,7 +1125,11 @@ class FormBuilder
             unset($options['hasError']);
         }
 
-        $merge = compact('type', 'value', 'id');
+        if(isset($value)) {
+            $merge = compact( 'value', 'id');
+        } else {
+            $merge = compact( 'id');
+        }
 
         $options = array_merge($options, $merge);
         return view('TailwindLaravel::submit', compact('options', 'hasError'));
