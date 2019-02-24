@@ -1,5 +1,15 @@
 # Tailwind Form
 
+# Forms & HTML
+
+[![Build Status](https://travis-ci.org/TiDJ/TailwindLaravel.svg)](https://travis-ci.org/TiDJ/TailwindLaravel)
+[![Total Downloads](https://poser.pugx.org/tomjamon/TailwindLaravel/downloads)](https://packagist.org/packages/TiDJ/TailwindLaravel)
+[![Latest Stable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/stable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
+[![Latest Unstable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/unstable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
+[![License](https://poser.pugx.org/tomjamon/TailwindLaravel/license.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
+
+Official documentation for Forms & Html for The Laravel Framework can be found at the [LaravelCollective](http://laravelcollective.com) website.
+
 ## About
 
 I use [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Homepage") lib HTML and [Tailwind](http://tailwindcss.com/ "Tailwind's Homepage")
@@ -32,6 +42,17 @@ Choose : ``Provider: TomJamon\TailwindLaravel\TailwindLaravelServiceProvider``
 A new folder ``resources/views/vendor/tailwindlaravel`` will be created with every components.
 
 You can now change every components class and stuff.
+
+## Components list
+
+- button
+- checkbox
+- control
+- input
+- link
+- select
+- submit
+- textarea
 
 ## Examples
 
