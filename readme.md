@@ -1,15 +1,12 @@
-# Tailwind Form
+<p align="center"><img src="https://s3.eu-west-3.amazonaws.com/tomjamon/medias/TailwindLaravel.png"></p>
 
-# Forms & HTML
+<p align="center">
+<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/license.svg" alt="License"></a>
+</p>
 
-[![Total Downloads](https://poser.pugx.org/tomjamon/TailwindLaravel/downloads)](https://packagist.org/packages/TiDJ/TailwindLaravel)
-[![Latest Stable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/stable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
-[![Latest Unstable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/unstable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
-[![License](https://poser.pugx.org/tomjamon/TailwindLaravel/license.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
-
-Official documentation for Forms & Html for The Laravel Framework can be found at the [LaravelCollective](http://laravelcollective.com) website.
-
-## About
+## Tailwind Form
 
 I use [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Homepage") lib HTML and [Tailwind](http://tailwindcss.com/ "Tailwind's Homepage")
 
@@ -46,9 +43,15 @@ You can now change every components class and stuff.
 
 - button
 - checkbox
+- close
 - control
+- datalist
+- form
 - input
+- label
 - link
+- optgroup
+- option
 - select
 - submit
 - textarea

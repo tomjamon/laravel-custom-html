@@ -233,7 +233,7 @@ class FormBuilder
         // extra value for the hidden _method field if it's needed for the form.
         $attributes = $this->html->attributes($attributes);
 
-        return $this->toHtmlString('<form' . $attributes . '>' . $append);
+        return view('TailwindLaravel::form', compact('attributes', 'append'));
     }
 
     /**
@@ -284,7 +284,7 @@ class FormBuilder
 
         $this->model = null;
 
-        return $this->toHtmlString('</form>');
+        return view('TailwindLaravel::close');
     }
 
     /**
@@ -321,7 +321,7 @@ class FormBuilder
             $value = $this->html->entities($value);
         }
 
-        return $this->toHtmlString('<label for="' . $name . '"' . $options . '>' . $value . '</label>');
+        return view('TailwindLaravel::label', compact('name', 'options', 'value'));
     }
 
     /**
@@ -805,7 +805,11 @@ class FormBuilder
                 $html[] = $this->option($space.$display, $value, $selected, $optionAttributes);
             }
         }
-        return $this->toHtmlString('<optgroup label="' . e($space.$label, false) . '"' . $this->html->attributes($attributes) . '>' . implode('', $html) . '</optgroup>');
+        $optLabel = e($space.$label, false);
+        $optAttributes = $this->html->attributes($attributes);
+        $optValue = implode('', $html);
+
+        return view('TailwindLaravel::optgroup', compact('optLabel', 'optAttributes', 'optValue'));
     }
 
     /**
@@ -844,12 +848,14 @@ class FormBuilder
     {
         $selected = $this->getSelectedValue(null, $selected);
 
-        $options = [
+        $options = $this->html->attributes([
             'selected' => $selected,
             'value' => '',
-        ];
+        ]);
 
-        return $this->toHtmlString('<option' . $this->html->attributes($options) . '>' . e($display, false) . '</option>');
+        $display = e($display, false);
+
+        return view('TailwindLaravel::option', compact('options', 'display'));
     }
 
     /**
@@ -1195,7 +1201,7 @@ class FormBuilder
 
         $list = implode('', $html);
 
-        return $this->toHtmlString("<datalist{$attributes}>{$list}</datalist>");
+        return view('TailwindLaravel::datalist', compact('attributes', 'list'));
     }
 
     /**
