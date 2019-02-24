@@ -1,6 +1,7 @@
 {
     "name": "tomjamon/tailwindlaravel",
     "description": "Form Input based on tailwind & laravelcollective",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
@@ -27,6 +28,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "5.7-dev"
+        },
         "laravel": {
             "providers": [
                 "TomJamon\\TailwindLaravel\\TailwindLaravelServiceProvider"
