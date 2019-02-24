@@ -2,7 +2,6 @@
 
 # Forms & HTML
 
-[![Build Status](https://travis-ci.org/TiDJ/TailwindLaravel.svg)](https://travis-ci.org/TiDJ/TailwindLaravel)
 [![Total Downloads](https://poser.pugx.org/tomjamon/TailwindLaravel/downloads)](https://packagist.org/packages/TiDJ/TailwindLaravel)
 [![Latest Stable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/stable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
 [![Latest Unstable Version](https://poser.pugx.org/tomjamon/TailwindLaravel/v/unstable.svg)](https://packagist.org/packages/TiDJ/TailwindLaravel)
