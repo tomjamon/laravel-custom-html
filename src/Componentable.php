@@ -3,6 +3,7 @@
 namespace TomJamon\TailwindLaravel;
 
 use BadMethodCallException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 
 trait Componentable
@@ -44,10 +45,10 @@ trait Componentable
     /**
      * Render a custom component.
      *
-     * @param        $name
-     * @param  array $arguments
+     * @param $name
+     * @param array $arguments
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return HtmlString
      */
     protected function renderComponent($name, array $arguments)
     {
@@ -81,7 +82,7 @@ trait Componentable
                 $default = null;
             }
 
-            $data[$variable] = array_get($arguments, $i, $default);
+            $data[$variable] = Arr::get($arguments, $i, $default);
 
             $i++;
         }
