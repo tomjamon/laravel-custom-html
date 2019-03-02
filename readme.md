@@ -80,7 +80,7 @@ You can now change every components classes and stuff.
 ___
 ![Input Medium](https://s3.eu-west-3.amazonaws.com/tomjamon/medias/tl-inputmd.png)
 ___
-##### Textarea with data
+##### Select
 
 ```php
 {!! Form::control('select', 'type', $errors, [
