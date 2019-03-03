@@ -6,7 +6,7 @@
 <a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/license.svg" alt="License"></a>
 </p>
 
-## Laravel Package - TailwindLaravel 
+## Tailwind for Laravel Collective 
 
 You want to use both [HTML and Form Builders](https://github.com/LaravelCollective/html "Github Project LaravelCollective/html") from [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Homepage")
  and [Tailwind](http://tailwindcss.com/ "Tailwind's Homepage") ?

@@ -1,6 +1,6 @@
 {
     "name": "tomjamon/tailwindlaravel",
-    "description": "Form Input based on tailwind & laravelcollective",
+    "description": "Tailwind for Laravel Collective",
     "license": "MIT",
     "type": "library",
     "authors": [
