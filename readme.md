@@ -108,17 +108,21 @@ ___
 
 ##### Input File
 
+With the control call, generating for you a label and parent block
+
 ```php
 {!! Form::control('file', 'thumbnail', $errors, [
     'label' => 'Your thumbnail',
 ]) !!}
 ```
 
-Or you can even use the input but And don't forget the 'files' => true in the Form::model() or Form::open():
+Or you can directly insert the input file :
 
 ```php
 {!! Form::file('thumbnail')  !!}
 ```
+
+And don't forget the 'files' => true in the Form::model() or Form::open()
 
 ## Why use : Clarity and simplicity
 
