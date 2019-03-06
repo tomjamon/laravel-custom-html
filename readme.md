@@ -65,6 +65,7 @@ You can now change every components classes and stuff.
 - select
 - submit
 - textarea
+- file
 
 ## Examples
 
@@ -104,6 +105,24 @@ ___
     'rows' => '25'
 ]) !!}
 ```
+
+##### Input File
+
+With the control call, generating for you a label and parent block
+
+```php
+{!! Form::control('file', 'thumbnail', $errors, [
+    'label' => 'Your thumbnail',
+]) !!}
+```
+
+Or you can directly insert the input file :
+
+```php
+{!! Form::file('thumbnail')  !!}
+```
+
+And don't forget the 'files' => true in the Form::model() or Form::open()
 
 ## Why use : Clarity and simplicity
 
