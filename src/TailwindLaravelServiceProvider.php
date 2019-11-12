@@ -2,7 +2,7 @@
 
 namespace TomJamon\TailwindLaravel;
 
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -11,7 +11,7 @@ use Illuminate\View\Compilers\BladeCompiler;
  * Class TailwindLaravel
  * @package TomJamon\TailwindLaravel
  */
-class TailwindLaravelServiceProvider extends ServiceProvider {
+class TailwindLaravelServiceProvider extends ServiceProvider implements DeferrableProvider {
 
     /**
      * Supported Blade Directives
@@ -26,13 +26,6 @@ class TailwindLaravelServiceProvider extends ServiceProvider {
         'file','textarea','select','selectRange','selectYear','selectMonth','getSelectOption',
         'checkbox','radio','reset','image','color','submit','button','old'
     ];
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
 
     /**
      *
