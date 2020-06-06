@@ -72,7 +72,7 @@ class HtmlBuilder
      * @param array  $attributes
      * @param bool   $secure
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function script($url, $attributes = [], $secure = null)
     {
@@ -88,7 +88,7 @@ class HtmlBuilder
      * @param array  $attributes
      * @param bool   $secure
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function style($url, $attributes = [], $secure = null)
     {
@@ -109,7 +109,7 @@ class HtmlBuilder
      * @param array  $attributes
      * @param bool   $secure
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function image($url, $alt = null, $attributes = [], $secure = null)
     {
@@ -126,7 +126,7 @@ class HtmlBuilder
      * @param array  $attributes
      * @param bool   $secure
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function favicon($url, $attributes = [], $secure = null)
     {
@@ -148,7 +148,7 @@ class HtmlBuilder
      * @param bool   $secure
      * @param bool   $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function link($url, $title = null, $attributes = [], $secure = null, $escape = true)
     {
@@ -170,13 +170,14 @@ class HtmlBuilder
      *
      * @param string $url
      * @param string $title
-     * @param array  $attributes
+     * @param array $attributes
+     * @param bool $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
-    public function secureLink($url, $title = null, $attributes = [])
+    public function secureLink($url, $title = null, $attributes = [], $escape = true)
     {
-        return $this->link($url, $title, $attributes, true);
+        return $this->link($url, $title, $attributes, true, $escape);
     }
 
     /**
@@ -184,16 +185,17 @@ class HtmlBuilder
      *
      * @param string $url
      * @param string $title
-     * @param array  $attributes
-     * @param bool   $secure
+     * @param array $attributes
+     * @param bool $secure
+     * @param bool $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
-    public function linkAsset($url, $title = null, $attributes = [], $secure = null)
+    public function linkAsset($url, $title = null, $attributes = [], $secure = null, $escape = true)
     {
         $url = $this->url->asset($url, $secure);
 
-        return $this->link($url, $title ?: $url, $attributes, $secure);
+        return $this->link($url, $title ?: $url, $attributes, $secure, $escape);
     }
 
     /**
@@ -201,13 +203,14 @@ class HtmlBuilder
      *
      * @param string $url
      * @param string $title
-     * @param array  $attributes
+     * @param array $attributes
+     * @param bool $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
-    public function linkSecureAsset($url, $title = null, $attributes = [])
+    public function linkSecureAsset($url, $title = null, $attributes = [], $escape = true)
     {
-        return $this->linkAsset($url, $title, $attributes, true);
+        return $this->linkAsset($url, $title, $attributes, true, $escape);
     }
 
     /**
@@ -215,14 +218,16 @@ class HtmlBuilder
      *
      * @param string $name
      * @param string $title
-     * @param array  $parameters
-     * @param array  $attributes
+     * @param array $parameters
+     * @param array $attributes
+     * @param null $secure
+     * @param bool $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
-    public function linkRoute($name, $title = null, $parameters = [], $attributes = [])
+    public function linkRoute($name, $title = null, $parameters = [], $attributes = [], $secure = null, $escape = true)
     {
-        return $this->link($this->url->route($name, $parameters), $title, $attributes);
+        return $this->link($this->url->route($name, $parameters), $title, $attributes, $secure, $escape);
     }
 
     /**
@@ -230,14 +235,16 @@ class HtmlBuilder
      *
      * @param string $action
      * @param string $title
-     * @param array  $parameters
-     * @param array  $attributes
+     * @param array $parameters
+     * @param array $attributes
+     * @param null $secure
+     * @param bool $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
-    public function linkAction($action, $title = null, $parameters = [], $attributes = [])
+    public function linkAction($action, $title = null, $parameters = [], $attributes = [], $secure = null, $escape = true)
     {
-        return $this->link($this->url->action($action, $parameters), $title, $attributes);
+        return $this->link($this->url->action($action, $parameters), $title, $attributes, $secure, $escape);
     }
 
     /**
@@ -248,7 +255,7 @@ class HtmlBuilder
      * @param array  $attributes
      * @param bool   $escape
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function mailto($email, $title = null, $attributes = [], $escape = true)
     {
@@ -295,7 +302,7 @@ class HtmlBuilder
      * @param array $list
      * @param array $attributes
      *
-     * @return \Illuminate\Support\HtmlString|string
+     * @return HtmlString|string
      */
     public function ol($list, $attributes = [])
     {
@@ -308,7 +315,7 @@ class HtmlBuilder
      * @param array $list
      * @param array $attributes
      *
-     * @return \Illuminate\Support\HtmlString|string
+     * @return HtmlString|string
      */
     public function ul($list, $attributes = [])
     {
@@ -321,7 +328,7 @@ class HtmlBuilder
      * @param array $list
      * @param array $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function dl(array $list, array $attributes = [])
     {
@@ -351,7 +358,7 @@ class HtmlBuilder
      * @param array  $list
      * @param array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString|string
+     * @return HtmlString|string
      */
     protected function listing($type, $list, $attributes = [])
     {
@@ -507,7 +514,7 @@ class HtmlBuilder
      * @param string $content
      * @param array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function meta($name, $content, array $attributes = [])
     {
@@ -525,7 +532,7 @@ class HtmlBuilder
      * @param mixed $content
      * @param array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function tag($tag, $content, array $attributes = [])
     {
@@ -538,7 +545,7 @@ class HtmlBuilder
      *
      * @param $html
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     protected function toHtmlString($html)
     {
