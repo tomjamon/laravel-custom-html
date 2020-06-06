@@ -1283,7 +1283,7 @@ class FormBuilder
     protected function getRouteAction($options)
     {
         if (is_array($options)) {
-            return $this->url->route($options[0], array_slice($options, 1));
+            return $this->url->route($options[0], head(array_slice($options, 1)));
         }
 
         return $this->url->route($options);
@@ -1442,7 +1442,7 @@ class FormBuilder
             return $this->model->getFormValue($key);
         }
 
-        return data_get($this->model, $this->transformKey($name));
+        return data_get($this->model, $key);
     }
 
     /**
