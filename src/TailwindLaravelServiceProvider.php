@@ -32,21 +32,22 @@ class TailwindLaravelServiceProvider extends ServiceProvider implements Deferrab
      */
     public function boot()
     {
-        $this->loadViewsFrom(realpath($this->getRootPath('components')), "TailwindLaravel");
-
-        // Used to customized your own form components
         $this->publishes([
-            realpath($this->getRootPath('components')) => resource_path('views/vendor/tailwindlaravel')
-        ]);
-    }
+            __DIR__.'/config/customform.php' => config_path('customform.php'),
+        ], 'config');
 
-    /**
-     * @param string $path
-     * @return string
-     */
-    protected function getRootPath(string $path) : string
-    {
-        return __DIR__.'/'.$path;
+        $theme = config('customform.theme');
+
+        $this->loadViewsFrom(
+            __DIR__.'/components/'.$theme,
+            "TailwindLaravel"
+        );
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/components' => resource_path('views/vendor/tailwindlaravel'),
+            ], 'laravel-custom-form');
+        }
     }
 
     /**
@@ -56,13 +57,11 @@ class TailwindLaravelServiceProvider extends ServiceProvider implements Deferrab
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config/customform.php', 'customform');
         $this->registerHtmlBuilder();
-
         $this->registerFormBuilder();
-
         $this->app->alias('html', HtmlBuilder::class);
         $this->app->alias('form', FormBuilder::class);
-
         $this->registerBladeDirectives();
     }
 

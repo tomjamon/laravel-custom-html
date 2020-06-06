@@ -1,0 +1,3 @@
+<datalist {!! $attributes !!}>
+    {!! $list !!}
+</datalist>
