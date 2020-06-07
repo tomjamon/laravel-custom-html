@@ -1,3 +1,3 @@
-<label class="text-grey-darker block uppercase tracking-wide text-xs font-bold mt-3 mb-1" for="{{ $name }}">
+<label class="col-md-4 col-form-label text-md-right" for="{{ $name }}">
     {{ $value }}
 </label>

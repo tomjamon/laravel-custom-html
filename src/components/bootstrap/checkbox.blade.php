@@ -1,12 +1,13 @@
 <input
-     type="checkbox"
-     class="my-3 mr-2 leading-tight"
-     @foreach ($options as $optionName => $optionValue)
-         {{$optionName}}="{{$optionValue}}"
-     @endforeach
+    type="checkbox"
+    class="checkbox"
+    @foreach ($options as $optionName => $optionValue)
+        {{$optionName}}="{{$optionValue}}"
+    @endforeach
+    {{ old($options['name']) ? 'checked' : '' }}
 />
 <label for="{{$options['name']}}" class="text-grey font-bold text-sm">
-    @if(isset($options['indication']))
+    @if (isset($options['indication']))
         {{$options['indication']}}
     @endif
 </label>

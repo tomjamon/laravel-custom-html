@@ -1,5 +1,5 @@
 <input
-    class="@if ($hasError) border-red @else border-grey-lighter @endif form-group"
+    class="@if ($hasError) is-invalid @endif form-control"
     @foreach ($options as $optionName => $optionValue)
         {{$optionName}}="{{$optionValue}}"
     @endforeach

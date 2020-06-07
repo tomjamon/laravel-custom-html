@@ -1,6 +1,6 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\LaravelCustomForm;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -8,10 +8,10 @@ use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 
 /**
- * Class TailwindLaravel
- * @package TomJamon\TailwindLaravel
+ * Class LaravelCustomFormServiceProvider
+ * @package TomJamon\LaravelCustomForm
  */
-class TailwindLaravelServiceProvider extends ServiceProvider implements DeferrableProvider {
+class LaravelCustomFormServiceProvider extends ServiceProvider implements DeferrableProvider {
 
     /**
      * Supported Blade Directives
@@ -40,12 +40,12 @@ class TailwindLaravelServiceProvider extends ServiceProvider implements Deferrab
 
         $this->loadViewsFrom(
             __DIR__.'/components/'.$theme,
-            "TailwindLaravel"
+            "customform"
         );
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/components' => resource_path('views/vendor/tailwindlaravel'),
+                __DIR__.'/components' => resource_path('views/vendor/customform'),
             ], 'laravel-custom-form');
         }
     }
