@@ -1,15 +1,9 @@
-<p align="center">
-
 ![Laravel Custom Html](laravel-custom-html.png)
 
-</p>
-
-<p align="center">
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/downloads" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/v/unstable.svg" alt="Latest Unstable Version"></a>
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/license.svg" alt="License"></a>
-</p>
 
 ## Laravel Custom HTML
 
@@ -25,26 +19,15 @@ The easiest way to install this library is to simply replace LC/HTML by this too
 
 ## Installation
 
-Install with composer :
+Simply launch this command from the root folder of your project :
 ```shell
 composer require tomjamon/laravel-custom-html
 ```
-
-Edit your ``config/app.php`` and add thoses lines :
-
-##### providers
-```php
-TomJamon\Html\HtmlServiceProvider::class,
-```
-
-##### aliases
-```php
-'Form' => TomJamon\Html\FormFacade::class,
-'Html' => TomJamon\Html\HtmlFacade::class,
-```    
         
-## Custom components
+### Customize components
 
+If you want to use a theme, or custom your views :
+ 
 Publish vendor views : ``php artisan vendor:publish``
 
 Choose : ``Provider: TomJamon\Html\HtmlServiceProvider``
@@ -53,7 +36,14 @@ A new folder ``resources/views/vendor/customhtml`` will be created with every co
 
 You can now change every components classes and stuff.
 
-## Components list
+### Themes
+
+If you want to use a theme you can customize it in config/customhtml.php
+
+FYI : Creating a TailwindCSS theme is the opposite of what Tailwind is made for.
+Please custom the theme, the theme is just giving a little help, an example of each component.
+ 
+### Components list
 
 - button
 - checkbox
@@ -71,17 +61,35 @@ You can now change every components classes and stuff.
 - textarea
 - file
 
-## Themes
+## No Auto-discovery
 
-If you want to use a theme you can customize it in config/customhtml.php
+Since Laravel 5.5, Taylor Otwell have instored a auto-discovery system.
+You do not longer need to put providers & alisase in app.php, but if you haven't auto-discovery enable : 
 
-FYI : Creating a TailwindCSS theme is the opposite of what Tailwind is made for.
-Please custom the theme, the theme is just giving a little help, an example of each component.
- 
+Edit your ``config/app.php`` and add thoses lines :
+
+##### providers
+```php
+TomJamon\Html\HtmlServiceProvider::class,
+```
+
+##### aliases
+```php
+'Form' => TomJamon\Html\FormFacade::class,
+'Html' => TomJamon\Html\HtmlFacade::class,
+```    
 
 ## Examples
 
-##### Simple text input 
+#### Project with login & register in Laravel Custom HTML
+
+https://github.com/TiDJ/laravel-custom-html-example
+
+Cmd : ``Composer install && npm run prod && php artisan serve``
+
+Pro Tip : Just change ``config/customhtml.php`` and to a ``php artisan optimize``
+
+#### Simple text input 
 
 ```php
 {!! Form::control('text', 'name', $errors, [
@@ -93,7 +101,7 @@ Please custom the theme, the theme is just giving a little help, an example of e
 ___
 ![Input Medium](tl-inputmd.png)
 ___
-##### Select
+#### Select
 
 ```php
 {!! Form::control('select', 'type', $errors, [
@@ -107,7 +115,7 @@ ___
 ]) !!}
 ```
 
-##### Textarea with an overrided rows number (Second array arguments)
+#### Textarea with an overrided rows number (Second array arguments)
 
 ```php
 {!! Form::control('textarea', 'content', $errors, [
@@ -118,7 +126,7 @@ ___
 ]) !!}
 ```
 
-##### Input File
+#### Input File
 
 With the control call, generating for you a label and parent block
 
@@ -140,7 +148,7 @@ And don't forget the 'files' => true in the Form::model() or Form::open()
 
 Here is how a form can look like
 
-##### Login form
+#### Login form
 
 ```php
 {!! Form::open(['route' => 'login']) !!}
