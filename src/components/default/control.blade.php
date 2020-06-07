@@ -2,9 +2,9 @@
 <div class="{{$groupClass}}">
     <!-- Label -->
     @if ($label != null)
-        <label class="@if ($hasError) class-error @else class-regular @endif other-class" for="{{$title}}">
-            {{$label}}
-        </label>
+        {!! $label !!}
+    @else
+        <!-- No label placeholder-->
     @endif
     <!-- Input -->
     {!! $input !!}
