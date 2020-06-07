@@ -1,16 +1,15 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\Html;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class HtmlFacade
- * @package TomJamon\TailwindLaravel
+ * @package TomJamon\Html
  */
 class HtmlFacade extends Facade
 {
-
     /**
      * Get the registered name of the component.
      *

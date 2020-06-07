@@ -1,6 +1,6 @@
 <?php
 
-namespace TomJamon\LaravelCustomForm;
+namespace TomJamon\Html;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -8,11 +8,11 @@ use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 
 /**
- * Class LaravelCustomFormServiceProvider
- * @package TomJamon\LaravelCustomForm
+ * Class HtmlServiceProvider
+ * @package TomJamon\Html
  */
-class LaravelCustomFormServiceProvider extends ServiceProvider implements DeferrableProvider {
-
+class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
+{
     /**
      * Supported Blade Directives
      *
@@ -33,19 +33,17 @@ class LaravelCustomFormServiceProvider extends ServiceProvider implements Deferr
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/customform.php' => config_path('customform.php'),
+            __DIR__.'/config/customhtml.php' => config_path('customhtml.php'),
         ], 'config');
 
-        $theme = config('customform.theme');
-
         $this->loadViewsFrom(
-            __DIR__.'/components/'.$theme,
-            "customform"
+            __DIR__.'/components/',
+            "customhtml"
         );
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/components' => resource_path('views/vendor/customform'),
+                __DIR__.'/components' => $this->app->resourcePath('views/vendor/customhtml'),
             ], 'laravel-custom-form');
         }
     }
@@ -57,7 +55,7 @@ class LaravelCustomFormServiceProvider extends ServiceProvider implements Deferr
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/customform.php', 'customform');
+        $this->mergeConfigFrom(__DIR__.'/config/customhtml.php', 'customhtml');
         $this->registerHtmlBuilder();
         $this->registerFormBuilder();
         $this->app->alias('html', HtmlBuilder::class);
@@ -73,7 +71,7 @@ class LaravelCustomFormServiceProvider extends ServiceProvider implements Deferr
     protected function registerHtmlBuilder()
     {
         $this->app->singleton('html', function ($app) {
-            return new HtmlBuilder($app['url'], $app['view']);
+            return new HtmlBuilder($app['view'], $app['url']);
         });
     }
 

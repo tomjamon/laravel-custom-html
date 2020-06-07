@@ -1,9 +1,14 @@
 {
-    "name": "tomjamon/tailwindlaravel",
-    "description": "Tailwind for Laravel Collective",
+    "name": "tomjamon/laravel-custom-html",
+    "description": "Custom HTML generator for Laravel (Based on LaravelCollective HTML)",
+    "keywords": ["laravel", "form", "html", "bootstrap", "tailwindcss"],
     "license": "MIT",
     "type": "library",
     "authors": [
+        {
+          "name": "Tom Jamon",
+          "homepage": "https://tomjamon.com"
+        },
         {
             "name": "Tom Jamon",
             "email": "contact@tomjamon.com"
@@ -24,7 +29,7 @@
     },
     "autoload": {
         "psr-4" : {
-            "TomJamon\\TailwindLaravel\\": "src/"
+            "TomJamon\\Html\\": "src/"
         }
     },
     "extra": {
@@ -33,11 +38,11 @@
         },
         "laravel": {
             "providers": [
-                "TomJamon\\TailwindLaravel\\TailwindLaravelServiceProvider"
+                "TomJamon\\Html\\HtmlServiceProvider"
             ],
             "aliases": {
-                "TailwindForm": "TomJamon\\TailwindLaravel\\TailwindLaravelFormFacade",
-                "TailwindHtml": "TomJamon\\TailwindLaravel\\TailwindLaravelHtmlFacade"
+                "Form": "TomJamon\\Html\\FormFacade",
+                "Html": "TomJamon\\Html\\HtmlFacade"
             }
         }
     }

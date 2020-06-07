@@ -1,6 +1,6 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\Html;
 
 use BadMethodCallException;
 use Illuminate\Support\HtmlString;
@@ -8,6 +8,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Routing\UrlGenerator;
 
+/**
+ * Class HtmlBuilder
+ * @package TomJamon\Html
+ */
 class HtmlBuilder
 {
     use Macroable, Componentable {
@@ -18,24 +22,24 @@ class HtmlBuilder
     /**
      * The URL generator instance.
      *
-     * @var \Illuminate\Contracts\Routing\UrlGenerator
+     * @var UrlGenerator
      */
     protected $url;
 
     /**
      * The View Factory instance.
      *
-     * @var \Illuminate\Contracts\View\Factory
+     * @var Factory
      */
     protected $view;
 
     /**
      * Create a new HTML builder instance.
      *
-     * @param \Illuminate\Contracts\Routing\UrlGenerator $url
-     * @param \Illuminate\Contracts\View\Factory         $view
+     * @param Factory $view
+     * @param UrlGenerator $url
      */
-    public function __construct(UrlGenerator $url = null, Factory $view)
+    public function __construct(Factory $view, UrlGenerator $url = null)
     {
         $this->url = $url;
         $this->view = $view;

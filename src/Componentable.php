@@ -1,14 +1,18 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\Html;
 
 use BadMethodCallException;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 
+/**
+ * Trait Componentable
+ * @package TomJamon\Html
+ */
 trait Componentable
 {
-
     /**
      * The registered components.
      *
@@ -96,9 +100,9 @@ trait Componentable
      * @param  string $method
      * @param  array  $parameters
      *
-     * @return \Illuminate\Contracts\View\View|mixed
+     * @return View|mixed
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call($method, $parameters)
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\Html;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class FormFacade
- * @package TomJamon\TailwindLaravel
+ * @package TomJamon\Html
  */
 class FormFacade extends Facade
 {

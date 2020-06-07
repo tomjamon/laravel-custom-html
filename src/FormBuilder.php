@@ -1,9 +1,10 @@
 <?php
 
-namespace TomJamon\TailwindLaravel;
+namespace TomJamon\Html;
 
 use BadMethodCallException;
 use DateTime;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Contracts\View\Factory;
@@ -13,10 +14,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\View\View;
 
 /**
  * Class FormBuilder
- * @package TomJamon\TailwindLaravel
+ * @package TomJamon\Html
  */
 class FormBuilder
 {
@@ -35,14 +37,14 @@ class FormBuilder
     /**
      * The URL generator instance.
      *
-     * @var \Illuminate\Contracts\Routing\UrlGenerator
+     * @var UrlGenerator
      */
     protected $url;
 
     /**
      * The View factory instance.
      *
-     * @var \Illuminate\Contracts\View\Factory
+     * @var Factory
      */
     protected $view;
 
@@ -62,7 +64,7 @@ class FormBuilder
     /**
      * The session store implementation.
      *
-     * @var \Illuminate\Contracts\Session\Session
+     * @var Session
      */
     protected $session;
 
@@ -116,11 +118,11 @@ class FormBuilder
     /**
      * Create a new form builder instance.
      *
-     * @param  \Collective\Html\HtmlBuilder               $html
-     * @param  \Illuminate\Contracts\Routing\UrlGenerator $url
-     * @param  \Illuminate\Contracts\View\Factory         $view
-     * @param  string                                     $csrfToken
-     * @param  Request                                    $request
+     * @param HtmlBuilder $html
+     * @param UrlGenerator $url
+     * @param Factory $view
+     * @param string $csrfToken
+     * @param Request $request
      */
     public function __construct(HtmlBuilder $html, UrlGenerator $url, Factory $view, $csrfToken, Request $request = null)
     {
@@ -132,6 +134,20 @@ class FormBuilder
     }
 
     /**
+     * @param $component
+     * @param array $data
+     * @param array $mergeData
+     * @return Application|Factory|View
+     */
+    public function viewFromTheme($component, $data = [], $mergeData = [])
+    {
+        $theme = config('customhtml.theme') ?? 'default';
+        $view = 'customhtml::' . $theme . DIRECTORY_SEPARATOR . $component;
+
+        return view($view, $data, $mergeData);
+    }
+
+    /**
      * ADDED FROM LARAVEL COLLECTIVE
      *
      * @param String $type
@@ -139,7 +155,7 @@ class FormBuilder
      * @param $errors
      * @param array $options
      * @param array $overrides
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function control(String $type, String $title, $errors = null, Array $options = [], Array $overrides = [])
     {
@@ -152,7 +168,10 @@ class FormBuilder
         foreach ($overrides as $override => $overrideValue):
             $attributes[$override] = $overrideValue;
         endforeach;
-        $label = $options['label'] ?? null;
+        $label = null;
+        if (isset($options['label'])) {
+            $label = $this->label($title, $options['label']);
+        }
         $message = $options['message'] ?? null;
         $selectAttributes = $attributes ?? [];
         $optionsAttributes = $attributes['optionsAttributes'] ?? [];
@@ -187,7 +206,7 @@ class FormBuilder
                 $input = call_user_func_array(['Form', $type], [$title, $value, $attributes]);
         endswitch;
 
-        return view('TailwindLaravel::control', compact( 'label', 'groupClass','title', 'message', 'input','hasError'));
+        return $this->viewFromTheme('control', compact( 'label', 'groupClass','title', 'message', 'input','hasError'));
     }
 
     /**
@@ -195,7 +214,7 @@ class FormBuilder
      *
      * @param  array $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function open(array $options = [])
     {
@@ -231,7 +250,7 @@ class FormBuilder
         // extra value for the hidden _method field if it's needed for the form.
         $attributes = $this->html->attributes($attributes);
 
-        return view('TailwindLaravel::form', compact('attributes', 'append'));
+        return $this->viewFromTheme('form', compact('attributes', 'append'));
     }
 
     /**
@@ -240,7 +259,7 @@ class FormBuilder
      * @param  mixed $model
      * @param  array $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function model($model, array $options = [])
     {
@@ -282,7 +301,7 @@ class FormBuilder
 
         $this->model = null;
 
-        return view('TailwindLaravel::close');
+        return $this->viewFromTheme('close');
     }
 
     /**
@@ -305,7 +324,7 @@ class FormBuilder
      * @param  array  $options
      * @param  bool   $escape_html
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function label($name, $value = null, $options = [], $escape_html = true)
     {
@@ -319,7 +338,7 @@ class FormBuilder
             $value = $this->html->entities($value);
         }
 
-        return view('TailwindLaravel::label', compact('name', 'options', 'value'));
+        return $this->viewFromTheme('label', compact('name', 'options', 'value'));
     }
 
     /**
@@ -336,7 +355,7 @@ class FormBuilder
     }
 
     /**
-     * OVERRIDED FROM LARAVEL COLLECTIVE
+     * OVERRIDE FROM LARAVEL COLLECTIVE
      * Create a form input field.
      *
      * @param  string $type
@@ -344,7 +363,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function input($type, $name, $value = null, $options = [])
     {
@@ -365,10 +384,10 @@ class FormBuilder
         $options = array_merge($options, $merge);
         switch ($type) {
             case 'checkbox':
-                $input = view('TailwindLaravel::checkbox', compact('options', 'hasError'));
+                $input = $this->viewFromTheme('checkbox', compact('options', 'hasError'));
                 break;
             default:
-                $input = view('TailwindLaravel::input', compact('options', 'hasError'));
+                $input = $this->viewFromTheme('input', compact('options', 'hasError'));
         }
 
         return $input;
@@ -381,7 +400,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function text($name, $value = null, $options = [])
     {
@@ -394,7 +413,7 @@ class FormBuilder
      * @param  string $name
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function password($name, $options = [])
     {
@@ -408,7 +427,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function range($name, $value = null, $options = [])
     {
@@ -422,7 +441,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function hidden($name, $value = null, $options = [])
     {
@@ -436,7 +455,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function search($name, $value = null, $options = [])
     {
@@ -450,7 +469,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function email($name, $value = null, $options = [])
     {
@@ -464,7 +483,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function tel($name, $value = null, $options = [])
     {
@@ -478,7 +497,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function number($name, $value = null, $options = [])
     {
@@ -492,7 +511,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function date($name, $value = null, $options = [])
     {
@@ -510,7 +529,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function datetime($name, $value = null, $options = [])
     {
@@ -528,7 +547,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function datetimeLocal($name, $value = null, $options = [])
     {
@@ -546,7 +565,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function time($name, $value = null, $options = [])
     {
@@ -564,7 +583,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function url($name, $value = null, $options = [])
     {
@@ -578,7 +597,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function week($name, $value = null, $options = [])
     {
@@ -595,7 +614,7 @@ class FormBuilder
      * @param  string $name
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function file($name, $options = [])
     {
@@ -603,14 +622,14 @@ class FormBuilder
     }
 
     /**
-     * OVERRIDED FROM LARAVEL COLLECTIVE
+     * OVERRIDE FROM LARAVEL COLLECTIVE
      * Create a textarea input field.
      *
      * @param  string $name
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function textarea($name, $value = null, $options = [])
     {
@@ -628,7 +647,7 @@ class FormBuilder
             unset($options['hasError']);
         }
 
-        return view('TailwindLaravel::textarea', compact('options', 'hasError', 'value'));
+        return $this->viewFromTheme('textarea', compact('options', 'hasError', 'value'));
     }
 
     /**
@@ -669,7 +688,7 @@ class FormBuilder
     }
 
     /**
-     * OVERRIDED FROM LARAVEL COLLECTIVE
+     * OVERRIDE FROM LARAVEL COLLECTIVE
      * Create a select box field.
      *
      * @param  string $name
@@ -679,7 +698,7 @@ class FormBuilder
      * @param  array  $optionsAttributes
      * @param  array  $optgroupsAttributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function select($name, $list = [], $selected = null, array $selectAttributes = [], array $optionsAttributes = [], array $optgroupsAttributes = [])
     {
@@ -701,7 +720,7 @@ class FormBuilder
         }
         $list = implode('', $html);
 
-        return view('TailwindLaravel::select', compact('selectAttributes', 'list'));
+        return $this->viewFromTheme('select', compact('selectAttributes', 'list'));
     }
 
     /**
@@ -713,7 +732,7 @@ class FormBuilder
      * @param  string $selected
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function selectRange($name, $begin, $end, $selected = null, $options = [])
     {
@@ -725,12 +744,6 @@ class FormBuilder
     /**
      * Create a select year field.
      *
-     * @param  string $name
-     * @param  string $begin
-     * @param  string $end
-     * @param  string $selected
-     * @param  array  $options
-     *
      * @return mixed
      */
     public function selectYear()
@@ -741,12 +754,12 @@ class FormBuilder
     /**
      * Create a select month field.
      *
-     * @param  string $name
-     * @param  string $selected
-     * @param  array  $options
-     * @param  string $format
+     * @param string $name
+     * @param string $selected
+     * @param array $options
+     * @param string $format
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function selectMonth($name, $selected = null, $options = [], $format = '%B')
     {
@@ -768,7 +781,7 @@ class FormBuilder
      * @param  array  $attributes
      * @param  array  $optgroupAttributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View|HtmlString
      */
     public function getSelectOption($display, $value, $selected, array $attributes = [], array $optgroupAttributes = [])
     {
@@ -789,7 +802,7 @@ class FormBuilder
      * @param  array  $optionsAttributes
      * @param  integer  $level
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     protected function optionGroup($list, $label, $selected, array $attributes = [], array $optionsAttributes = [], $level = 0)
     {
@@ -807,7 +820,7 @@ class FormBuilder
         $optAttributes = $this->html->attributes($attributes);
         $optValue = implode('', $html);
 
-        return view('TailwindLaravel::optgroup', compact('optLabel', 'optAttributes', 'optValue'));
+        return $this->viewFromTheme('optgroup', compact('optLabel', 'optAttributes', 'optValue'));
     }
 
     /**
@@ -818,7 +831,7 @@ class FormBuilder
      * @param  string $selected
      * @param  array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     protected function option($display, $value, $selected, array $attributes = [])
     {
@@ -840,7 +853,7 @@ class FormBuilder
      * @param $display
      * @param $selected
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     protected function placeholderOption($display, $selected)
     {
@@ -853,7 +866,7 @@ class FormBuilder
 
         $display = e($display, false);
 
-        return view('TailwindLaravel::option', compact('options', 'display'));
+        return $this->viewFromTheme('option', compact('options', 'display'));
     }
 
     /**
@@ -885,7 +898,7 @@ class FormBuilder
      * @param  bool   $checked
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function checkbox($name, $value = 1, $checked = null, $options = [])
     {
@@ -900,7 +913,7 @@ class FormBuilder
      * @param  bool   $checked
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function radio($name, $value = null, $checked = null, $options = [])
     {
@@ -920,7 +933,7 @@ class FormBuilder
      * @param  bool   $checked
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     protected function checkable($type, $name, $value, $checked, $options)
     {
@@ -1043,7 +1056,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function reset($value, $attributes = [])
     {
@@ -1057,7 +1070,7 @@ class FormBuilder
      * @param  string $name
      * @param  array  $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function image($url, $name = null, $attributes = [])
     {
@@ -1073,7 +1086,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function month($name, $value = null, $options = [])
     {
@@ -1091,7 +1104,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function color($name, $value = null, $options = [])
     {
@@ -1104,7 +1117,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function submit($value = null, $options = [])
     {
@@ -1136,8 +1149,8 @@ class FormBuilder
         }
 
         $options = array_merge($options, $merge);
-        return view('TailwindLaravel::submit', compact('options', 'hasError'));
 
+        return $this->viewFromTheme('submit', compact('options', 'hasError'));
     }
 
     /**
@@ -1146,7 +1159,7 @@ class FormBuilder
      * @param  string $value
      * @param  array  $options
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function button($value = null, $options = [])
     {
@@ -1154,7 +1167,7 @@ class FormBuilder
             $options['type'] = 'button';
         }
 
-        return view('TailwindLaravel::button', compact('value', 'options'));
+        return $this->viewFromTheme('button', compact('value', 'options'));
     }
 
     /**
@@ -1162,11 +1175,11 @@ class FormBuilder
      *
      * @param null $value
      * @param array $options
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function link($value = null, $options = [])
     {
-        return view('TailwindLaravel::link', compact('value', 'options'));
+        return $this->viewFromTheme('link', compact('value', 'options'));
     }
 
     /**
@@ -1175,7 +1188,7 @@ class FormBuilder
      * @param  string $id
      * @param  array  $list
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return Application|Factory|View
      */
     public function datalist($id, $list = [])
     {
@@ -1199,7 +1212,7 @@ class FormBuilder
 
         $list = implode('', $html);
 
-        return view('TailwindLaravel::datalist', compact('attributes', 'list'));
+        return $this->viewFromTheme('datalist', compact('attributes', 'list'));
     }
 
     /**
@@ -1510,7 +1523,7 @@ class FormBuilder
      *
      * @param $html
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     protected function toHtmlString($html)
     {
@@ -1520,7 +1533,7 @@ class FormBuilder
     /**
      * Get the session store implementation.
      *
-     * @return  \Illuminate\Contracts\Session\Session  $session
+     * @return  Session  $session
      */
     public function getSessionStore()
     {
@@ -1530,7 +1543,7 @@ class FormBuilder
     /**
      * Set the session store implementation.
      *
-     * @param  \Illuminate\Contracts\Session\Session $session
+     * @param Session $session
      *
      * @return $this
      */
@@ -1549,7 +1562,7 @@ class FormBuilder
      *
      * @return \Illuminate\Contracts\View\View|mixed
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call($method, $parameters)
     {

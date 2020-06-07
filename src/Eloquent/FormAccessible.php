@@ -1,14 +1,18 @@
 <?php
 
-namespace TomJamon\TailwindLaravel\Eloquent;
+namespace TomJamon\Html\Eloquent;
 
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 use Illuminate\Support\Str;
 
+/**
+ * Trait FormAccessible
+ * @package TomJamon\Html\Eloquent
+ */
 trait FormAccessible
 {
-
     /**
      * A cached ReflectionClass instance for $this
      *
@@ -103,6 +107,7 @@ trait FormAccessible
     /**
      * Get a ReflectionClass Instance
      * @return ReflectionClass
+     * @throws ReflectionException
      */
     protected function getReflection()
     {
