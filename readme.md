@@ -1,4 +1,9 @@
-<p align="center">![Laravel Custom Html](laravel-custom-html.png)</p>
+<p align="center">
+
+![Laravel Custom Html](laravel-custom-html.png)
+
+</p>
+
 <p align="center">
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/downloads" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/v/stable.svg" alt="Latest Stable Version"></a>
