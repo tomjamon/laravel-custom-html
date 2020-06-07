@@ -5,7 +5,7 @@
          {{$optionName}}="{{$optionValue}}"
      @endforeach
 />
-<label for="{{$options['name']}}" class="text-grey font-bold text-sm">
+<label for="{{$options['name']}}" class="text-grey-400 font-bold text-sm">
     @if(isset($options['indication']))
         {{$options['indication']}}
     @endif
