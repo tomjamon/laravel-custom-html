@@ -1,49 +1,57 @@
 {
-    "name": "tomjamon/laravel-custom-html",
-    "description": "Custom HTML generator for Laravel (Based on LaravelCollective HTML)",
-    "keywords": ["laravel", "form", "html", "bootstrap", "tailwindcss"],
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-          "name": "Tom Jamon",
-          "homepage": "https://tomjamon.com"
-        },
-        {
-            "name": "Tom Jamon",
-            "email": "contact@tomjamon.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.2.5",
-        "illuminate/http": "^6.0|^7.0",
-        "illuminate/routing": "^6.0|^7.0",
-        "illuminate/session": "^6.0|^7.0",
-        "illuminate/support": "^6.0|^7.0",
-        "illuminate/view": "^6.0|^7.0"
+  "name": "tomjamon/laravel-custom-html",
+  "description": "Custom HTML generator for Laravel (Based on LaravelCollective HTML)",
+  "keywords": [
+    "laravel",
+    "form",
+    "html",
+    "bootstrap",
+    "tailwindcss"
+  ],
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Tom Jamon",
+      "homepage": "https://tomjamon.com"
     },
-    "require-dev": {
-        "illuminate/database": "^6.0|^7.0",
-        "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "~7.1"
-    },
-    "autoload": {
-        "psr-4" : {
-            "TomJamon\\Html\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "7.0-dev"
-        },
-        "laravel": {
-            "providers": [
-                "TomJamon\\Html\\HtmlServiceProvider"
-            ],
-            "aliases": {
-                "Form": "TomJamon\\Html\\FormFacade",
-                "Html": "TomJamon\\Html\\HtmlFacade"
-            }
-        }
+    {
+      "name": "Tom Jamon",
+      "email": "contact@tomjamon.com"
     }
+  ],
+  "require": {
+    "php": ">=7.2.5",
+    "illuminate/http": "^6.0|^7.0",
+    "illuminate/routing": "^6.0|^7.0",
+    "illuminate/session": "^6.0|^7.0",
+    "illuminate/support": "^6.0|^7.0",
+    "illuminate/view": "^6.0|^7.0"
+  },
+  "require-dev": {
+    "illuminate/database": "^6.0|^7.0",
+    "mockery/mockery": "~1.0",
+    "phpunit/phpunit": "~7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "TomJamon\\Html\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "7.0-dev"
+    },
+    "laravel": {
+      "providers": [
+        "TomJamon\\Html\\HtmlServiceProvider"
+      ],
+      "aliases": {
+        "Form": "TomJamon\\Html\\FormFacade",
+        "Html": "TomJamon\\Html\\HtmlFacade"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
