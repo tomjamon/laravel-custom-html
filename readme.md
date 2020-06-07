@@ -1,21 +1,19 @@
-<p align="center"><img src="https://s3.eu-west-3.amazonaws.com/tomjamon/medias/TailwindLaravel.png"></p>
-
+<p align="center">![Laravel Custom Html](laravel-custom-html.png)</p>
 <p align="center">
-<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/downloads" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/TiDJ/TailwindLaravel"><img src="https://poser.pugx.org/tomjamon/TailwindLaravel/license.svg" alt="License"></a>
+<a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/tomjamon/laravel-custom-html"><img src="https://poser.pugx.org/tomjamon/laravel-custom-html/license.svg" alt="License"></a>
 </p>
 
-## Tailwind for Laravel Collective 
+## Laravel Custom HTML
 
-You want to use both [HTML and Form Builders](https://github.com/LaravelCollective/html "Github Project LaravelCollective/html") from [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Homepage")
- and [Tailwind](http://tailwindcss.com/ "Tailwind's Homepage") ?
- 
-Here is a package allowing you to easily use both. 
+Based on [HTML and Form Builders](https://github.com/LaravelCollective/html "Github Project LaravelCollective/html") 
+from [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Homepage")
 
-TailwindLaravel offer 14 components publishable, with some default Tailwind classes.
-
-A new component "**control()**" allow you to have an input and his label, within a parent flex block sized at your convenance, in one call.
+This library offer : 
+- 14 publishable components 
+- 2 themes ([Tailwind](http://tailwindcss.com/ "Tailwind's Homepage") and [Boostrap](https://getbootstrap.com/ "Boostrap's Homepage")).
+- A new component "**control()**" allow you to have an input, his label and his error message within a parent block, in one call.
  
 The easiest way to install this library is to simply replace LC/HTML by this tool.
 
@@ -23,29 +21,29 @@ The easiest way to install this library is to simply replace LC/HTML by this too
 
 Install with composer :
 ```shell
-composer require tomjamon/tailwindlaravel
+composer require tomjamon/laravel-custom-html
 ```
 
 Edit your ``config/app.php`` and add thoses lines :
 
 ##### providers
 ```php
-TomJamon\TailwindLaravel\TailwindLaravelServiceProvider::class,
+TomJamon\Html\HtmlServiceProvider::class,
 ```
 
 ##### aliases
 ```php
-'Form' => TomJamon\TailwindLaravel\FormFacade::class,
-'Html' => TomJamon\TailwindLaravel\HtmlFacade::class,
+'Form' => TomJamon\Html\FormFacade::class,
+'Html' => TomJamon\Html\HtmlFacade::class,
 ```    
         
 ## Custom components
 
 Publish vendor views : ``php artisan vendor:publish``
 
-Choose : ``Provider: TomJamon\TailwindLaravel\TailwindLaravelServiceProvider``
+Choose : ``Provider: TomJamon\Html\HtmlServiceProvider``
 
-A new folder ``resources/views/vendor/tailwindlaravel`` will be created with every components.
+A new folder ``resources/views/vendor/customhtml`` will be created with every components.
 
 You can now change every components classes and stuff.
 
@@ -67,6 +65,14 @@ You can now change every components classes and stuff.
 - textarea
 - file
 
+## Themes
+
+If you want to use a theme you can customize it in config/customhtml.php
+
+FYI : Creating a TailwindCSS theme is the opposite of what Tailwind is made for.
+Please custom the theme, the theme is just giving a little help, an example of each component.
+ 
+
 ## Examples
 
 ##### Simple text input 
@@ -79,7 +85,7 @@ You can now change every components classes and stuff.
 ]) !!}
 ```
 ___
-![Input Medium](https://s3.eu-west-3.amazonaws.com/tomjamon/medias/tl-inputmd.png)
+![Input Medium](tl-inputmd.png)
 ___
 ##### Select
 
@@ -139,5 +145,5 @@ Here is how a form can look like
 {!! Form::close() !!}
 ```
 ___
-![Login Form](https://s3.eu-west-3.amazonaws.com/tomjamon/medias/tl-loginform.png)
+![Login Form](tl-loginform.png)
 ___
