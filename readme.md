@@ -12,7 +12,7 @@ from [Laravelcollective](https://laravelcollective.com/ "Laravel Collective's Ho
 
 This library offer : 
 - 14 publishable components 
-- 2 themes ([Tailwind](http://tailwindcss.com/ "Tailwind's Homepage") and [Boostrap](https://getbootstrap.com/ "Boostrap's Homepage")).
+- 2 themes ([TailwindCSS](http://tailwindcss.com/ "Tailwind's Homepage") and [Bootstrap](https://getbootstrap.com/ "Boostrap's Homepage")).
 - A new component "**control()**" allow you to have an input, his label and his error message within a parent block, in one call.
  
 The easiest way to install this library is to simply replace LC/HTML by this tool.
